@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 - TODAY, Kaynnan Lemes <kaynnan.lemes@escodoo.com.br>
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="view_account_analytic_line_form_inherit_repair" model="ir.ui.view">
+        <field name="name">account.analytic.line.form.inherit.repair</field>
+        <field name="model">account.analytic.line</field>
+        <field name="inherit_id" ref="analytic.view_account_analytic_line_form" />
+        <field name="arch" type="xml">
+            <group name="amount" position="after">
+                <group name="repair" string="Repair">
+                    <field name="repair_order_id" readonly="1" />
+                </group>
+            </group>
+        </field>
+    </record>
+
+    <record id="view_account_analytic_line_list_inherit_repair" model="ir.ui.view">
+        <field name="name">account.analytic.line.list.inherit.repair</field>
+        <field name="model">account.analytic.line</field>
+        <field name="inherit_id" ref="analytic.view_account_analytic_line_tree" />
+        <field name="arch" type="xml">
+            <field name="amount" position="before">
+                <field name="repair_order_id" optional="hide" readonly="1" />
+            </field>
+        </field>
+    </record>
+
+    <record id="view_account_analytic_line_search_inherit_repair" model="ir.ui.view">
+        <field name="name">account.analytic.line.search.inherit.repair</field>
+        <field name="model">account.analytic.line</field>
+        <field name="inherit_id" ref="analytic.view_account_analytic_line_filter" />
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="repair_order_id" />
+            </field>
+            <filter name="month" position="before">
+                <filter
+                    name="repair_orders"
+                    string="Repair Orders"
+                    domain="[('repair_order_id', '!=', False)]"
+                />
+                <separator />
+            </filter>
+            <filter name="group_date" position="after">
+                <filter
+                    name="group_repair_order"
+                    string="Repair Order"
+                    context="{'group_by': 'repair_order_id'}"
+                />
+            </filter>
+        </field>
+    </record>
+</odoo>
